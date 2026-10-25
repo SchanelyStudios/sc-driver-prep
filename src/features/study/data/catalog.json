@@ -1,0 +1,1000 @@
+{
+  "source": {
+    "title": "Driver’s License Manual",
+    "url": "https://dmv.sc.gov/sites/scdmv/files/2026-04/Driver%27s%20Manual.pdf",
+    "sourceId": "scdmv-76e393cb2d15",
+    "retrievedDate": "2026-10-24",
+    "dateTimezone": "America/New_York",
+    "pageCount": 141,
+    "sha256": "76e393cb2d1538b361ad52cb6035d89c70baedde3de9fb273d8c44c83f6699fc",
+    "edition": "No explicit edition label identified on cover; URL path says 2026-04; PDF creation metadata is March 30, 2026. Use checksum to identify this exact source.",
+    "sections": [
+      {
+        "number": 1,
+        "title": "The Driver’s License",
+        "pdfStart": 5,
+        "pdfEnd": 28,
+        "lastContentLabel": "1-23",
+        "type": "instructional"
+      },
+      {
+        "number": 2,
+        "title": "State Laws and Rules of the Road",
+        "pdfStart": 29,
+        "pdfEnd": 31,
+        "lastContentLabel": "2-3",
+        "type": "instructional"
+      },
+      {
+        "number": 3,
+        "title": "Be in Shape to Drive",
+        "pdfStart": 32,
+        "pdfEnd": 43,
+        "lastContentLabel": "3-12",
+        "type": "instructional"
+      },
+      {
+        "number": 4,
+        "title": "Before You Drive",
+        "pdfStart": 44,
+        "pdfEnd": 53,
+        "lastContentLabel": "4-10",
+        "type": "instructional"
+      },
+      {
+        "number": 5,
+        "title": "Basic Driving",
+        "pdfStart": 54,
+        "pdfEnd": 59,
+        "lastContentLabel": "5-6",
+        "type": "instructional"
+      },
+      {
+        "number": 6,
+        "title": "Rules of the Road",
+        "pdfStart": 60,
+        "pdfEnd": 75,
+        "lastContentLabel": "6-15",
+        "type": "instructional"
+      },
+      {
+        "number": 7,
+        "title": "General Driving",
+        "pdfStart": 76,
+        "pdfEnd": 93,
+        "lastContentLabel": "7-18",
+        "type": "instructional"
+      },
+      {
+        "number": 8,
+        "title": "Safe Driving Tips",
+        "pdfStart": 94,
+        "pdfEnd": 103,
+        "lastContentLabel": "8-10",
+        "type": "instructional"
+      },
+      {
+        "number": 9,
+        "title": "Emergency Situations and Avoiding Collisions",
+        "pdfStart": 104,
+        "pdfEnd": 109,
+        "lastContentLabel": "9-6",
+        "type": "instructional"
+      },
+      {
+        "number": 10,
+        "title": "Sharing the Road",
+        "pdfStart": 110,
+        "pdfEnd": 125,
+        "lastContentLabel": "10-16",
+        "type": "instructional"
+      },
+      {
+        "number": 11,
+        "title": "Special Driving Situations",
+        "pdfStart": 126,
+        "pdfEnd": 139,
+        "lastContentLabel": "11-13",
+        "type": "instructional"
+      },
+      {
+        "number": 12,
+        "title": "Test Your Knowledge",
+        "pdfStart": 140,
+        "pdfEnd": 141,
+        "lastContentLabel": "12-2",
+        "type": "reference"
+      }
+    ]
+  },
+  "bankVersion": "full-draft-0.2",
+  "sections": [
+    {
+      "number": 1,
+      "title": "The Driver’s License",
+      "pdfStart": 5,
+      "pdfEnd": 28,
+      "lastContentLabel": "1-23",
+      "type": "instructional",
+      "id": "S01",
+      "reviewCount": 25,
+      "objectiveIds": [
+        "S01-O01",
+        "S01-O02",
+        "S01-O03",
+        "S01-O04",
+        "S01-O05",
+        "S01-O06",
+        "S01-O07",
+        "S01-O08",
+        "S01-O09",
+        "S01-O10"
+      ]
+    },
+    {
+      "number": 2,
+      "title": "State Laws and Rules of the Road",
+      "pdfStart": 29,
+      "pdfEnd": 31,
+      "lastContentLabel": "2-3",
+      "type": "instructional",
+      "id": "S02",
+      "reviewCount": 10,
+      "objectiveIds": [
+        "S02-O01",
+        "S02-O02",
+        "S02-O03",
+        "S02-O04",
+        "S02-O05"
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Be in Shape to Drive",
+      "pdfStart": 32,
+      "pdfEnd": 43,
+      "lastContentLabel": "3-12",
+      "type": "instructional",
+      "id": "S03",
+      "reviewCount": 20,
+      "objectiveIds": [
+        "S03-O01",
+        "S03-O02",
+        "S03-O03",
+        "S03-O04",
+        "S03-O05",
+        "S03-O06",
+        "S03-O07"
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Before You Drive",
+      "pdfStart": 44,
+      "pdfEnd": 53,
+      "lastContentLabel": "4-10",
+      "type": "instructional",
+      "id": "S04",
+      "reviewCount": 20,
+      "objectiveIds": [
+        "S04-O01",
+        "S04-O02",
+        "S04-O03",
+        "S04-O04",
+        "S04-O05",
+        "S04-O06",
+        "S04-O07"
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Basic Driving",
+      "pdfStart": 54,
+      "pdfEnd": 59,
+      "lastContentLabel": "5-6",
+      "type": "instructional",
+      "id": "S05",
+      "reviewCount": 20,
+      "objectiveIds": [
+        "S05-O01",
+        "S05-O02",
+        "S05-O03",
+        "S05-O04",
+        "S05-O05",
+        "S05-O06",
+        "S05-O07",
+        "S05-O08",
+        "S05-O09",
+        "S05-O10"
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Rules of the Road",
+      "pdfStart": 60,
+      "pdfEnd": 75,
+      "lastContentLabel": "6-15",
+      "type": "instructional",
+      "id": "S06",
+      "reviewCount": 30,
+      "objectiveIds": [
+        "S06-O01",
+        "S06-O02",
+        "S06-O03",
+        "S06-O04",
+        "S06-O05",
+        "S06-O06",
+        "S06-O07",
+        "S06-O08",
+        "S06-O09",
+        "S06-O10",
+        "S06-O11"
+      ]
+    },
+    {
+      "number": 7,
+      "title": "General Driving",
+      "pdfStart": 76,
+      "pdfEnd": 93,
+      "lastContentLabel": "7-18",
+      "type": "instructional",
+      "id": "S07",
+      "reviewCount": 30,
+      "objectiveIds": [
+        "S07-O01",
+        "S07-O02",
+        "S07-O03",
+        "S07-O04",
+        "S07-O05",
+        "S07-O06",
+        "S07-O07",
+        "S07-O08",
+        "S07-O09",
+        "S07-O10",
+        "S07-O11"
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Safe Driving Tips",
+      "pdfStart": 94,
+      "pdfEnd": 103,
+      "lastContentLabel": "8-10",
+      "type": "instructional",
+      "id": "S08",
+      "reviewCount": 20,
+      "objectiveIds": [
+        "S08-O01",
+        "S08-O02",
+        "S08-O03",
+        "S08-O04",
+        "S08-O05"
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Emergency Situations and Avoiding Collisions",
+      "pdfStart": 104,
+      "pdfEnd": 109,
+      "lastContentLabel": "9-6",
+      "type": "instructional",
+      "id": "S09",
+      "reviewCount": 20,
+      "objectiveIds": [
+        "S09-O01",
+        "S09-O02",
+        "S09-O03",
+        "S09-O04",
+        "S09-O05",
+        "S09-O06",
+        "S09-O07",
+        "S09-O08"
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Sharing the Road",
+      "pdfStart": 110,
+      "pdfEnd": 125,
+      "lastContentLabel": "10-16",
+      "type": "instructional",
+      "id": "S10",
+      "reviewCount": 25,
+      "objectiveIds": [
+        "S10-O01",
+        "S10-O02",
+        "S10-O03",
+        "S10-O04",
+        "S10-O05",
+        "S10-O06",
+        "S10-O07",
+        "S10-O08"
+      ]
+    },
+    {
+      "number": 11,
+      "title": "Special Driving Situations",
+      "pdfStart": 126,
+      "pdfEnd": 139,
+      "lastContentLabel": "11-13",
+      "type": "instructional",
+      "id": "S11",
+      "reviewCount": 25,
+      "objectiveIds": [
+        "S11-O01",
+        "S11-O02",
+        "S11-O03",
+        "S11-O04",
+        "S11-O05",
+        "S11-O06",
+        "S11-O07"
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Test Your Knowledge",
+      "pdfStart": 140,
+      "pdfEnd": 141,
+      "lastContentLabel": "12-2",
+      "type": "reference",
+      "id": "S12",
+      "reviewCount": 0,
+      "objectiveIds": [
+        "S12-O01",
+        "S12-O02"
+      ]
+    }
+  ],
+  "objectives": [
+    {
+      "id": "S01-O01",
+      "sectionId": "S01",
+      "title": "License classes and required documents carried while driving",
+      "description": "Differentiate Class D from other classes; identify license, registration and insurance requirements.",
+      "pdfPage": 5
+    },
+    {
+      "id": "S01-O02",
+      "sectionId": "S01",
+      "title": "Application documentation",
+      "description": "Locate citizenship/identity/address requirements and the appropriate SCDMV checklist.",
+      "pdfPage": 8
+    },
+    {
+      "id": "S01-O03",
+      "sectionId": "S01",
+      "title": "Beginner’s permit",
+      "description": "Apply age, tests, supervision and age-dependent holding periods.",
+      "pdfPage": 8
+    },
+    {
+      "id": "S01-O04",
+      "sectionId": "S01",
+      "title": "First-time licensing",
+      "description": "Distinguish permit from first-license requirements, practice hours, driver education and school certification.",
+      "pdfPage": 9
+    },
+    {
+      "id": "S01-O05",
+      "sectionId": "S01",
+      "title": "Graduated licensing",
+      "description": "Apply conditional/special restricted license restrictions, exceptions and waiver boundaries.",
+      "pdfPage": 11
+    },
+    {
+      "id": "S01-O06",
+      "sectionId": "S01",
+      "title": "Required tests",
+      "description": "Identify test requirements, permitted preparation, vehicle readiness and skills-test retry intervals.",
+      "pdfPage": 14
+    },
+    {
+      "id": "S01-O07",
+      "sectionId": "S01",
+      "title": "Out-of-state and international drivers",
+      "description": "Distinguish visitors from residents and locate transfer and reciprocity guidance.",
+      "pdfPage": 17
+    },
+    {
+      "id": "S01-O08",
+      "sectionId": "S01",
+      "title": "Renewal",
+      "description": "Identify vision/renewal requirements and expired-license restrictions.",
+      "pdfPage": 19
+    },
+    {
+      "id": "S01-O09",
+      "sectionId": "S01",
+      "title": "Points and loss of privileges",
+      "description": "Explain point accumulation, age/license distinctions, suspensions and limits of point reduction.",
+      "pdfPage": 22
+    },
+    {
+      "id": "S01-O10",
+      "sectionId": "S01",
+      "title": "Reinstatement and restricted licenses",
+      "description": "Locate reinstatement guidance and distinguish restricted/temporary privileges from unrestricted driving.",
+      "pdfPage": 24
+    },
+    {
+      "id": "S02-O01",
+      "sectionId": "S02",
+      "title": "Selective Service",
+      "description": "Identify the application requirement and where it is described.",
+      "pdfPage": 29
+    },
+    {
+      "id": "S02-O02",
+      "sectionId": "S02",
+      "title": "Organ donation",
+      "description": "Explain donor registration and the stated under-18 guardian role.",
+      "pdfPage": 29
+    },
+    {
+      "id": "S02-O03",
+      "sectionId": "S02",
+      "title": "Littering",
+      "description": "Recognize litter, including cigarette butts, and lawful disposal.",
+      "pdfPage": 30
+    },
+    {
+      "id": "S02-O04",
+      "sectionId": "S02",
+      "title": "Golf carts",
+      "description": "Apply the manual’s age, license, permit, daylight, distance and roadway restrictions.",
+      "pdfPage": 30
+    },
+    {
+      "id": "S02-O05",
+      "sectionId": "S02",
+      "title": "Other vehicle manuals",
+      "description": "Locate separate commercial, large vehicle and motorcycle/moped guidance.",
+      "pdfPage": 31
+    },
+    {
+      "id": "S03-O01",
+      "sectionId": "S03",
+      "title": "Vision",
+      "description": "Apply corrective-lens restrictions and identify vision-screening guidance.",
+      "pdfPage": 32
+    },
+    {
+      "id": "S03-O02",
+      "sectionId": "S03",
+      "title": "Fatigue",
+      "description": "Recognize fatigue and choose rest and trip-planning responses.",
+      "pdfPage": 34
+    },
+    {
+      "id": "S03-O03",
+      "sectionId": "S03",
+      "title": "Distractions and Hands-Free Act",
+      "description": "Distinguish distraction risks from stated device prohibitions and penalties.",
+      "pdfPage": 35
+    },
+    {
+      "id": "S03-O04",
+      "sectionId": "S03",
+      "title": "Aggressive driving",
+      "description": "Recognize dangerous behaviors and choose patient responses.",
+      "pdfPage": 36
+    },
+    {
+      "id": "S03-O05",
+      "sectionId": "S03",
+      "title": "Alcohol and drugs",
+      "description": "Explain impairment, under-21 consequences, implied consent and medication interactions.",
+      "pdfPage": 37
+    },
+    {
+      "id": "S03-O06",
+      "sectionId": "S03",
+      "title": "Emotions",
+      "description": "Choose alternatives to driving while emotionally overwhelmed.",
+      "pdfPage": 41
+    },
+    {
+      "id": "S03-O07",
+      "sectionId": "S03",
+      "title": "Older drivers",
+      "description": "Recognize changes that warrant adjusting driving or professional evaluation.",
+      "pdfPage": 41
+    },
+    {
+      "id": "S04-O01",
+      "sectionId": "S04",
+      "title": "Vehicle inspection",
+      "description": "Check cold tire pressure against the door label and recognize inadequate tread.",
+      "pdfPage": 44
+    },
+    {
+      "id": "S04-O02",
+      "sectionId": "S04",
+      "title": "Seat and mirrors",
+      "description": "Adjust seating, head restraints and mirrors before moving; understand blind spots.",
+      "pdfPage": 46
+    },
+    {
+      "id": "S04-O03",
+      "sectionId": "S04",
+      "title": "Safety belts",
+      "description": "Apply belt fit and primary-enforcement guidance.",
+      "pdfPage": 48
+    },
+    {
+      "id": "S04-O04",
+      "sectionId": "S04",
+      "title": "Air bags",
+      "description": "Explain why air bags supplement rather than replace belts.",
+      "pdfPage": 49
+    },
+    {
+      "id": "S04-O05",
+      "sectionId": "S04",
+      "title": "Child passenger safety",
+      "description": "Choose restraints using the full age/size/fit conditions in the two-page table.",
+      "pdfPage": 50
+    },
+    {
+      "id": "S04-O06",
+      "sectionId": "S04",
+      "title": "Secure loads",
+      "description": "Identify load security measures and check for shifting or falling cargo.",
+      "pdfPage": 51
+    },
+    {
+      "id": "S04-O07",
+      "sectionId": "S04",
+      "title": "ADAS",
+      "description": "Recognize assistance limits and retain responsibility for observation and control.",
+      "pdfPage": 52
+    },
+    {
+      "id": "S05-O01",
+      "sectionId": "S05",
+      "title": "Starting",
+      "description": "Prepare brake/gear position and check dashboard indicators after starting.",
+      "pdfPage": 54
+    },
+    {
+      "id": "S05-O02",
+      "sectionId": "S05",
+      "title": "Moving",
+      "description": "Check the path and blind spots, signal and accelerate smoothly.",
+      "pdfPage": 54
+    },
+    {
+      "id": "S05-O03",
+      "sectionId": "S05",
+      "title": "Stopping",
+      "description": "Check rear traffic and use steady braking for a normal stop.",
+      "pdfPage": 54
+    },
+    {
+      "id": "S05-O04",
+      "sectionId": "S05",
+      "title": "Steering grip",
+      "description": "Use an outside-rim grip and appropriate two-hand positioning.",
+      "pdfPage": 55
+    },
+    {
+      "id": "S05-O05",
+      "sectionId": "S05",
+      "title": "Hand-to-hand steering",
+      "description": "Recognize push/pull use and benefits without relying on ambiguous clock-range wording.",
+      "pdfPage": 55
+    },
+    {
+      "id": "S05-O06",
+      "sectionId": "S05",
+      "title": "Hand-over-hand steering",
+      "description": "Recognize low-speed turning and parking use.",
+      "pdfPage": 57
+    },
+    {
+      "id": "S05-O07",
+      "sectionId": "S05",
+      "title": "One-hand exceptions",
+      "description": "Keep control during a temporary reach or backing; distinguish exceptions from routine driving.",
+      "pdfPage": 57
+    },
+    {
+      "id": "S05-O08",
+      "sectionId": "S05",
+      "title": "Before reversing",
+      "description": "Inspect behind the vehicle and hold the brake when shifting to reverse.",
+      "pdfPage": 58
+    },
+    {
+      "id": "S05-O09",
+      "sectionId": "S05",
+      "title": "Backing visibility",
+      "description": "Look directly rearward and use mirrors/camera as supporting checks until stopped.",
+      "pdfPage": 58
+    },
+    {
+      "id": "S05-O10",
+      "sectionId": "S05",
+      "title": "Backing control",
+      "description": "Back slowly; steer for the rear’s intended path and check front/sides when turning.",
+      "pdfPage": 58
+    },
+    {
+      "id": "S06-O01",
+      "sectionId": "S06",
+      "title": "Yielding",
+      "description": "Apply arrival order, simultaneous-arrival, left-turn, driveway and ramp yielding.",
+      "pdfPage": 60
+    },
+    {
+      "id": "S06-O02",
+      "sectionId": "S06",
+      "title": "Traffic controls",
+      "description": "Recognize signals, signs, markings and personnel as controls.",
+      "pdfPage": 61
+    },
+    {
+      "id": "S06-O03",
+      "sectionId": "S06",
+      "title": "Signals",
+      "description": "Distinguish steady/flashing lights and the conditions for a right turn on red.",
+      "pdfPage": 61
+    },
+    {
+      "id": "S06-O04",
+      "sectionId": "S06",
+      "title": "Warning signs",
+      "description": "Identify pictured hazards from shapes and symbols.",
+      "pdfPage": 63
+    },
+    {
+      "id": "S06-O05",
+      "sectionId": "S06",
+      "title": "Railroad crossings",
+      "description": "Interpret warnings, multiple-track indicators and crossing precautions.",
+      "pdfPage": 65
+    },
+    {
+      "id": "S06-O06",
+      "sectionId": "S06",
+      "title": "Work-zone controls",
+      "description": "Follow temporary signals, flaggers, signs and barriers.",
+      "pdfPage": 66
+    },
+    {
+      "id": "S06-O07",
+      "sectionId": "S06",
+      "title": "Regulatory signs",
+      "description": "Interpret prohibitions, lane use, speed, stop, yield and one-way signs.",
+      "pdfPage": 68
+    },
+    {
+      "id": "S06-O08",
+      "sectionId": "S06",
+      "title": "Guide/route signs",
+      "description": "Distinguish guide, route, secondary-route and evacuation signs.",
+      "pdfPage": 70
+    },
+    {
+      "id": "S06-O09",
+      "sectionId": "S06",
+      "title": "Yellow markings",
+      "description": "Use line patterns to identify opposing directions and passing permissions.",
+      "pdfPage": 71
+    },
+    {
+      "id": "S06-O10",
+      "sectionId": "S06",
+      "title": "White markings and lane controls",
+      "description": "Interpret same-direction lanes, shared left-turn lanes and reversible controls.",
+      "pdfPage": 73
+    },
+    {
+      "id": "S06-O11",
+      "sectionId": "S06",
+      "title": "Crosswalks and stop lines",
+      "description": "Choose the stopping position and yield at marked or unmarked crossings.",
+      "pdfPage": 74
+    },
+    {
+      "id": "S07-O01",
+      "sectionId": "S07",
+      "title": "Turns",
+      "description": "Choose lanes, yield and maintain position through single/multiple-lane turns.",
+      "pdfPage": 76
+    },
+    {
+      "id": "S07-O02",
+      "sectionId": "S07",
+      "title": "Turnabouts",
+      "description": "Distinguish two-/three-point maneuvers and choose appropriate situations.",
+      "pdfPage": 77
+    },
+    {
+      "id": "S07-O03",
+      "sectionId": "S07",
+      "title": "Intersections",
+      "description": "Search before entering; recognize DDI and RCUT layouts.",
+      "pdfPage": 79
+    },
+    {
+      "id": "S07-O04",
+      "sectionId": "S07",
+      "title": "Roundabouts",
+      "description": "Yield to circulating traffic, travel counterclockwise and signal exits.",
+      "pdfPage": 82
+    },
+    {
+      "id": "S07-O05",
+      "sectionId": "S07",
+      "title": "School buses",
+      "description": "Apply stop/resume rules and roadway/loading-zone exceptions.",
+      "pdfPage": 83
+    },
+    {
+      "id": "S07-O06",
+      "sectionId": "S07",
+      "title": "Parking",
+      "description": "Apply legal positioning and angle, perpendicular, parallel and hill-parking procedures.",
+      "pdfPage": 85
+    },
+    {
+      "id": "S07-O07",
+      "sectionId": "S07",
+      "title": "Lane changes",
+      "description": "Check mirrors and blind spots, signal and enter a safe gap.",
+      "pdfPage": 89
+    },
+    {
+      "id": "S07-O08",
+      "sectionId": "S07",
+      "title": "Highway entry",
+      "description": "Use the acceleration lane, match traffic and yield when merging.",
+      "pdfPage": 89
+    },
+    {
+      "id": "S07-O09",
+      "sectionId": "S07",
+      "title": "Roadway exit",
+      "description": "Plan the exit and slow in the deceleration lane.",
+      "pdfPage": 90
+    },
+    {
+      "id": "S07-O10",
+      "sectionId": "S07",
+      "title": "Passing",
+      "description": "Choose safe/legal passing, return clearance and behavior when passed.",
+      "pdfPage": 90
+    },
+    {
+      "id": "S07-O11",
+      "sectionId": "S07",
+      "title": "Zipper merge",
+      "description": "Distinguish backed-up traffic from free-flowing highway conditions.",
+      "pdfPage": 92
+    },
+    {
+      "id": "S08-O01",
+      "sectionId": "S08",
+      "title": "Visual search",
+      "description": "Scan ahead/sides/rear and adjust position to preserve visibility.",
+      "pdfPage": 94
+    },
+    {
+      "id": "S08-O02",
+      "sectionId": "S08",
+      "title": "Speed management",
+      "description": "Adjust before curves and for wet/icy roads; avoid flooded roads.",
+      "pdfPage": 95
+    },
+    {
+      "id": "S08-O03",
+      "sectionId": "S08",
+      "title": "Stopping distance",
+      "description": "Distinguish perception, reaction and braking distance and their conditions.",
+      "pdfPage": 98
+    },
+    {
+      "id": "S08-O04",
+      "sectionId": "S08",
+      "title": "Space management",
+      "description": "Use a four-second minimum and increase space when conditions require.",
+      "pdfPage": 98
+    },
+    {
+      "id": "S08-O05",
+      "sectionId": "S08",
+      "title": "Communication",
+      "description": "Choose headlights/horn appropriately and signal movements in advance.",
+      "pdfPage": 101
+    },
+    {
+      "id": "S09-O01",
+      "sectionId": "S09",
+      "title": "Collision avoidance and braking",
+      "description": "Distinguish emergency options and maintain ABS pressure rather than pumping.",
+      "pdfPage": 104
+    },
+    {
+      "id": "S09-O02",
+      "sectionId": "S09",
+      "title": "Skids and drop-offs",
+      "description": "Choose controlled steering and gradual recovery for the stated scenario.",
+      "pdfPage": 105
+    },
+    {
+      "id": "S09-O03",
+      "sectionId": "S09",
+      "title": "Brake failure",
+      "description": "Recognize the manual’s response; hold engine-off sequencing for safety review.",
+      "pdfPage": 106
+    },
+    {
+      "id": "S09-O04",
+      "sectionId": "S09",
+      "title": "Tire blowout",
+      "description": "Maintain direction, slow gradually and leave the road safely.",
+      "pdfPage": 107
+    },
+    {
+      "id": "S09-O05",
+      "sectionId": "S09",
+      "title": "Power failure",
+      "description": "Maintain control with steady braking and seek a safe stopping location.",
+      "pdfPage": 107
+    },
+    {
+      "id": "S09-O06",
+      "sectionId": "S09",
+      "title": "Stuck accelerator",
+      "description": "Identify the repair-before-driving requirement after a stuck-accelerator incident; emergency recovery sequence excluded.",
+      "pdfPage": 108
+    },
+    {
+      "id": "S09-O07",
+      "sectionId": "S09",
+      "title": "Breakdown",
+      "description": "Move off the road when possible, warn others and seek help.",
+      "pdfPage": 108
+    },
+    {
+      "id": "S09-O08",
+      "sectionId": "S09",
+      "title": "Emergency contacts",
+      "description": "Locate the SCDMV emergency-contact record service.",
+      "pdfPage": 109
+    },
+    {
+      "id": "S10-O01",
+      "sectionId": "S10",
+      "title": "Pedestrians",
+      "description": "Yield appropriately, protect visually impaired pedestrians and watch school/residential areas.",
+      "pdfPage": 110
+    },
+    {
+      "id": "S10-O02",
+      "sectionId": "S10",
+      "title": "Bicyclists",
+      "description": "Respect rights, pass with space and recognize signals, lane conflicts and dooring risks.",
+      "pdfPage": 111
+    },
+    {
+      "id": "S10-O03",
+      "sectionId": "S10",
+      "title": "Motorcyclists",
+      "description": "Allow full lanes and space; avoid assuming a flashing signal guarantees a turn.",
+      "pdfPage": 114
+    },
+    {
+      "id": "S10-O04",
+      "sectionId": "S10",
+      "title": "Commercial vehicles",
+      "description": "Avoid no-zones, leave stopping/turning space and pass with adequate clearance.",
+      "pdfPage": 116
+    },
+    {
+      "id": "S10-O05",
+      "sectionId": "S10",
+      "title": "Emergency vehicles",
+      "description": "Yield and pull aside without blocking routes.",
+      "pdfPage": 120
+    },
+    {
+      "id": "S10-O06",
+      "sectionId": "S10",
+      "title": "Traffic stops",
+      "description": "Stop safely, keep hands visible and follow instructions before reaching for documents.",
+      "pdfPage": 121
+    },
+    {
+      "id": "S10-O07",
+      "sectionId": "S10",
+      "title": "Move-over law",
+      "description": "Change lanes away when safe; otherwise slow and proceed cautiously.",
+      "pdfPage": 123
+    },
+    {
+      "id": "S10-O08",
+      "sectionId": "S10",
+      "title": "Slow-moving vehicles",
+      "description": "Recognize the triangle and pass farm/animal-drawn traffic cautiously.",
+      "pdfPage": 124
+    },
+    {
+      "id": "S11-O01",
+      "sectionId": "S11",
+      "title": "Night driving",
+      "description": "Choose beams and following distance for traffic, weather and visibility.",
+      "pdfPage": 126
+    },
+    {
+      "id": "S11-O02",
+      "sectionId": "S11",
+      "title": "Work zones",
+      "description": "Reduce speed, increase space and obey controls even without visible workers.",
+      "pdfPage": 128
+    },
+    {
+      "id": "S11-O03",
+      "sectionId": "S11",
+      "title": "Rural roads",
+      "description": "Adjust for traction, narrow roads/bridges, limited views and uncontrolled intersections.",
+      "pdfPage": 130
+    },
+    {
+      "id": "S11-O04",
+      "sectionId": "S11",
+      "title": "Winter driving",
+      "description": "Use gentle control, allow extra space and respond to ice or being stuck.",
+      "pdfPage": 131
+    },
+    {
+      "id": "S11-O05",
+      "sectionId": "S11",
+      "title": "Trailer hookup",
+      "description": "Check coupler, safety chains, lights and visibility.",
+      "pdfPage": 133
+    },
+    {
+      "id": "S11-O06",
+      "sectionId": "S11",
+      "title": "Trailer loading",
+      "description": "Understand front-heavy loading, securing cargo and sway response.",
+      "pdfPage": 135
+    },
+    {
+      "id": "S11-O07",
+      "sectionId": "S11",
+      "title": "Trailer operation",
+      "description": "Compensate in speed, space, turning, backing and repeated inspections.",
+      "pdfPage": 136
+    },
+    {
+      "id": "S12-O01",
+      "sectionId": "S12",
+      "title": "Official practice resource",
+      "description": "Identify the manual’s practice-app reference.",
+      "pdfPage": 140
+    },
+    {
+      "id": "S12-O02",
+      "sectionId": "S12",
+      "title": "Sample knowledge questions",
+      "description": "Use the ten samples to inform topic/style review, not to duplicate course completion.",
+      "pdfPage": 140
+    }
+  ],
+  "comprehensiveQuotas": {
+    "S01": 4,
+    "S02": 2,
+    "S03": 4,
+    "S04": 4,
+    "S05": 2,
+    "S06": 6,
+    "S07": 6,
+    "S08": 4,
+    "S09": 2,
+    "S10": 4,
+    "S11": 2
+  }
+}

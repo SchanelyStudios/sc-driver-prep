@@ -1,0 +1,22 @@
+@theme {
+  --color-canvas: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-ink: #182c39;
+  --color-muted: #566875;
+  --color-subtle: #74828c;
+  --color-line: #e2e7eb;
+  --color-brand: #163b45;
+  --color-brand-soft: #eaf3f3;
+  --color-brand-hover: #0e2c34;
+  --color-accent: #eaa25f;
+  --color-accent-soft: #fff1e3;
+  --color-accent-ink: #84421b;
+  --color-success: #276147;
+  --color-success-soft: #eaf4ed;
+  --color-danger: #a13535;
+  --color-danger-soft: #fff0ed;
+  --color-focus: #187583;
+  --font-sans: Arial, Helvetica, sans-serif;
+  --radius-card: 1.25rem;
+  --shadow-card: 0 4px 24px #182c3905;
+}
