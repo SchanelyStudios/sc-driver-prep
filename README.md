@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Enter an email to create or resume a profile on the same browser. This is local identification, not authentication. Email, study answers and scores stay in browser storage; clearing site data removes them. The app needs no backend, environment secrets or externally fetched fonts.
+Enter an email to create or resume a profile on the same browser. This is local identification, not authentication. Email, study answers and scores stay in browser storage; clearing site data removes them. The app needs no backend, environment secrets or externally fetched fonts. Interaction instrumentation also stays local; no analytics endpoint is configured. See [instrumentation and future transport](docs/analytics.md).
 
 ## Learning experience
 
@@ -19,11 +19,12 @@ Enter an email to create or resume a profile on the same browser. This is local 
 - Guided practice checks each answer immediately and links to the source manual.
 - Section reviews cover mapped objective groups, show explanations after submission, and pass at exactly 85% or higher.
 - A 40-question comprehensive review is available as a pretest; first, latest and best results are retained.
+- After a pretest, a next-step card points to your unfinished or next unpassed section. New comprehensive reviews and cancellation both require confirmation.
 - Recommendations identify topics missed across recent reviews. Earned passes stay earned after failed retakes.
 - Attempts resume after refresh with the same questions, choice order and answers. Profile switching, explicit clearing and storage-failure notices are included.
 - Section 12 is reference-only.
 
-The 327-item bank includes 14 sign images. The original 20 Section 5 pilot items and the Section 9 repair-aftercare question were approved; 306 other items remain prototype drafts. The stuck-accelerator emergency sequence and other documented ambiguous facets are excluded. Section reviews cover mapped groups, not every atomic fact in every attempt. Editorial completion remains necessary before broader release.
+The 327-item bank includes 14 sign images. The original 20 Section 5 pilot items, the Section 9 repair-aftercare question, and the revised steering-grip questions were approved; 304 other items remain prototype drafts. The stuck-accelerator emergency sequence and other documented ambiguous facets are excluded. Section reviews cover mapped groups, not every atomic fact in every attempt. Editorial completion remains necessary before broader release.
 
 ## Checks
 

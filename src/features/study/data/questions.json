@@ -1,5 +1,5 @@
 {
-  "bankVersion": "full-draft-0.2",
+  "bankVersion": "full-draft-0.6",
   "sourceId": "scdmv-76e393cb2d15",
   "status": "Draft bank across all instructional sections; new items are not user-approved; content holds remain.",
   "coverageUnit": "objective-group, not every atomic fact",
@@ -5059,32 +5059,32 @@
     },
     {
       "id": "S05-Q27",
-      "revision": 1,
+      "revision": 4,
       "sectionId": "S05",
       "primaryObjectiveId": "S05-O04",
       "coverageUnit": "objective-group",
       "kind": "text",
-      "prompt": "How does this section describe gripping the steering wheel?",
+      "prompt": "Which of these is NOT a proper way to grip the steering wheel according to this section?",
       "choices": [
         {
           "id": "S05-Q27-C3",
-          "text": "With your thumbs hooked inside the rim."
+          "text": "Rest your thumbs along the front of the wheel rather than wrapping them around the inside of the rim."
         },
         {
           "id": "S05-Q27-C1",
-          "text": "With your fingers and thumbs up along the face of the wheel."
+          "text": "Grip the wheel very tightly."
         },
         {
           "id": "S05-Q27-C4",
-          "text": "With fingers wrapped around the wheel from inside the rim."
+          "text": "Place your hands on opposite sides of the outside rim."
         },
         {
           "id": "S05-Q27-C2",
-          "text": "With your palms pressed against the center only."
+          "text": "Grip with your fingers instead of your palms."
         }
       ],
       "correctChoiceId": "S05-Q27-C1",
-      "explanation": "Use a firm but gentle outside grip. The manual warns against gripping from inside the rim.",
+      "explanation": "Use a firm but gentle grip, with your fingers gripping the outside rim rather than your palms. Rest your thumbs along the front of the wheel instead of hooking them inside the rim.",
       "source": {
         "sourceId": "scdmv-76e393cb2d15",
         "heading": "Steering grip",
@@ -5095,12 +5095,12 @@
         "pdfEndPage": 55,
         "url": "https://dmv.sc.gov/sites/scdmv/files/2026-04/Driver%27s%20Manual.pdf#page=55"
       },
-      "editorialStatus": "source-checked-draft",
-      "notes": "Draft checked against the cited manual passage. Original practice item; not official SCDMV exam content. New-question editorial review pending."
+      "editorialStatus": "user-approved",
+      "notes": "Revised at the user’s request: clearer thumb wording and opposite-side hand placement instead of a choice directly opposing the keyed very-tight grip."
     },
     {
       "id": "S05-Q28",
-      "revision": 1,
+      "revision": 2,
       "sectionId": "S05",
       "primaryObjectiveId": "S05-O04",
       "coverageUnit": "objective-group",
@@ -5117,7 +5117,7 @@
         },
         {
           "id": "S05-Q28-C3",
-          "text": "Left at 3–5 and right at 7–9 o'clock."
+          "text": "Left hand at 11–1 o'clock and right hand at 5–7 o'clock."
         },
         {
           "id": "S05-Q28-C1",
@@ -5136,8 +5136,8 @@
         "pdfEndPage": 55,
         "url": "https://dmv.sc.gov/sites/scdmv/files/2026-04/Driver%27s%20Manual.pdf#page=55"
       },
-      "editorialStatus": "source-checked-draft",
-      "notes": "Draft checked against the cited manual passage. Original practice item; not official SCDMV exam content. New-question editorial review pending."
+      "editorialStatus": "user-approved",
+      "notes": "At the user’s request, replaced the swapped correct ranges with a distinct 11–1 / 5–7 distractor. Correct hand positions and citation unchanged."
     },
     {
       "id": "S05-Q29",

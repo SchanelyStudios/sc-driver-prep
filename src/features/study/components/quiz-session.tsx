@@ -9,6 +9,7 @@ import { ChoiceGroup } from "@/components/ui/choice-group";
 import { Progress } from "@/components/ui/progress";
 import { Dialog } from "@/components/ui/dialog";
 import { classes } from "@/lib/classes";
+import { useQuestionInstrumentation } from "../hooks/use-question-instrumentation";
 import { studyActions } from "../lib/repository";
 import { sections } from "../data";
 import { QuestionImage } from "./question-image";
@@ -34,6 +35,7 @@ const styles = {
   status: "sr-only",
 };
 export function QuizSession({ attempt }: { attempt: Attempt }) {
+  useQuestionInstrumentation(attempt);
   const [submitOpen, setSubmitOpen] = useState(false);
   const question = attempt.questions[attempt.cursor];
   const checked = attempt.checked.includes(question.id);
@@ -135,7 +137,9 @@ export function QuizSession({ attempt }: { attempt: Attempt }) {
           <Button
             variant="quiet"
             disabled={attempt.cursor === 0}
-            onClick={() => studyActions.cursor(attempt.id, attempt.cursor - 1)}
+            onClick={() =>
+              studyActions.cursor(attempt.id, attempt.cursor - 1, "previous")
+            }
           >
             <Icon name="back" size="sm" />
             Previous
@@ -151,7 +155,7 @@ export function QuizSession({ attempt }: { attempt: Attempt }) {
           ) : attempt.cursor < attempt.questions.length - 1 ? (
             <Button
               onClick={() =>
-                studyActions.cursor(attempt.id, attempt.cursor + 1)
+                studyActions.cursor(attempt.id, attempt.cursor + 1, "next")
               }
             >
               Next question

@@ -8,6 +8,21 @@ async function signIn(page: Page, email = "learner@example.com") {
     page.getByRole("heading", { name: "Your road ahead." }),
   ).toBeVisible();
 }
+async function openSection(page: Page, number: string) {
+  await page
+    .getByRole("navigation", { name: "Study sections" })
+    .getByRole("button", { name: new RegExp(`^${number} `) })
+    .click();
+}
+async function confirmComprehensive(page: Page) {
+  const dialog = page.getByRole("dialog", {
+    name: "Start a new comprehensive review?",
+  });
+  await expect(dialog).toBeVisible();
+  await dialog
+    .getByRole("button", { name: "Start comprehensive review", exact: true })
+    .click();
+}
 async function currentQuestion(page: Page) {
   return page.evaluate((key) => {
     const state = JSON.parse(localStorage.getItem(key)!);
@@ -41,7 +56,7 @@ test("guided feedback, locked first answers, refresh/resume, and profile isolati
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await signIn(page);
-  await page.getByRole("button", { name: "Explore Basic Driving" }).click();
+  await openSection(page, "05");
   await page.getByRole("button", { name: "Start guided practice" }).click();
   const q = await selectAnswer(page, false);
   await expect(page.getByText(q.explanation, { exact: true })).toHaveCount(0);
@@ -83,7 +98,7 @@ test("a section review passes at 17/20 and a failed retake never removes the pas
   page,
 }) => {
   await signIn(page);
-  await page.getByRole("button", { name: "Explore Basic Driving" }).click();
+  await openSection(page, "05");
   await page.getByRole("button", { name: "Start section review" }).click();
   for (let i = 0; i < 20; i++) {
     const q = await selectAnswer(page, i < 17);
@@ -110,7 +125,7 @@ test("a section review passes at 17/20 and a failed retake never removes the pas
     .getByRole("button", { name: "My learning", exact: true })
     .last()
     .click();
-  await page.getByRole("button", { name: "Explore Basic Driving" }).click();
+  await openSection(page, "05");
   await expect(
     page.getByText("Your section pass is earned and stays earned.", {
       exact: false,
@@ -161,6 +176,7 @@ test("comprehensive baseline is retained across retakes and reset affects only t
   await page
     .getByRole("button", { name: "Take comprehensive review", exact: true })
     .click();
+  await confirmComprehensive(page);
   await page
     .getByRole("button", { name: "Finish review", exact: true })
     .click();
@@ -173,6 +189,7 @@ test("comprehensive baseline is retained across retakes and reset affects only t
     return state.profiles[0].attempts[0].id;
   }, KEY);
   await page.getByRole("button", { name: "Try a fresh review" }).click();
+  await confirmComprehensive(page);
   await selectAnswer(page, true);
   await page
     .getByRole("button", { name: "Finish review", exact: true })
@@ -246,7 +263,7 @@ test("quota failures keep the current session usable and announce that progress 
   await expect(
     page.getByRole("alert").filter({ hasText: "could not be saved" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Explore Basic Driving" }).click();
+  await openSection(page, "05");
   await page.getByRole("button", { name: "Start guided practice" }).click();
   await page.getByRole("radio").first().focus();
   await page.keyboard.press("ArrowDown");
@@ -257,4 +274,252 @@ test("quota failures keep the current session usable and announce that progress 
   await expect(
     page.getByText("Question 2 / 40", { exact: true }),
   ).toBeVisible();
+});
+
+async function events(page: Page) {
+  return page.evaluate(
+    () =>
+      JSON.parse(
+        localStorage.getItem("sc-driver-prep:events:v1") ?? '{"events":[]}',
+      ).events,
+  ) as Promise<import("../../src/features/study/analytics/types").StudyEvent[]>;
+}
+
+test("dashboard confirms new reviews, resumes without creating another, and confirms cancellation", async ({
+  page,
+}) => {
+  await signIn(page);
+  await expect(page.getByText("A little progress, every time.")).toHaveCount(0);
+  await expect(page.getByText("Your pace. Your path.")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /^Open section/ })).toHaveCount(
+    0,
+  );
+  await expect(
+    page.getByRole("heading", { name: "How road-ready are you?" }),
+  ).toBeVisible();
+  await expect(page.getByText("A good place to continue")).toHaveCount(0);
+  await page.getByRole("button", { name: "Take pretest", exact: true }).click();
+  await page.getByRole("button", { name: "Not now", exact: true }).click();
+  expect(
+    await page.evaluate(
+      (key) =>
+        JSON.parse(localStorage.getItem(key)!).profiles[0].attempts.length,
+      KEY,
+    ),
+  ).toBe(0);
+  await page.getByRole("button", { name: "Take pretest", exact: true }).click();
+  await confirmComprehensive(page);
+  await selectAnswer(page, true);
+  await page.getByRole("button", { name: "Save & leave" }).click();
+  await expect(
+    page.getByRole("button", { name: "Resume session" }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Take comprehensive review", exact: true })
+    .click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  expect(
+    await page.evaluate(
+      (key) =>
+        JSON.parse(localStorage.getItem(key)!).profiles[0].attempts.length,
+      KEY,
+    ),
+  ).toBe(1);
+  await page.getByRole("button", { name: "Save & leave" }).click();
+  await page
+    .getByRole("main")
+    .getByRole("button", { name: "Cancel review", exact: true })
+    .click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Keep review" })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Resume session" }),
+  ).toBeVisible();
+  await page
+    .getByRole("main")
+    .getByRole("button", { name: "Cancel review", exact: true })
+    .click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Cancel review", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Resume session" }),
+  ).toHaveCount(0);
+  const cancelled = await page.evaluate(
+    (key) => JSON.parse(localStorage.getItem(key)!).profiles[0].attempts[0],
+    KEY,
+  );
+  expect(cancelled.status).toBe("cancelled");
+  expect(cancelled.cancelledAt).toBeTruthy();
+  expect(
+    (await events(page)).filter((e) => e.name === "review_cancelled"),
+  ).toHaveLength(1);
+  expect(
+    (await events(page)).filter((e) => e.name === "review_completed"),
+  ).toHaveLength(0);
+  await page.reload();
+  await expect(
+    page.getByRole("heading", { name: "How road-ready are you?" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Take pretest", exact: true }).click();
+  await confirmComprehensive(page);
+  await page
+    .getByRole("button", { name: "Finish review", exact: true })
+    .click();
+  await page.getByRole("button", { name: "Submit anyway" }).click();
+  await page
+    .getByRole("button", { name: "My learning", exact: true })
+    .last()
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "How road-ready are you?" }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "The Driver’s License", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Explore section", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "The Driver’s License" }),
+  ).toBeVisible();
+  await openSection(page, "04");
+  await page.getByRole("button", { name: "Start guided practice" }).click();
+  await page.getByRole("button", { name: "Save & leave" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Before You Drive", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Continue section", exact: true }),
+  ).toBeVisible();
+});
+
+test("question instrumentation records visits, answer timing, completions and pause/resume without email", async ({
+  page,
+}) => {
+  await signIn(page);
+  await openSection(page, "05");
+  await page.getByRole("button", { name: "Start guided practice" }).click();
+  const q = await selectAnswer(page, false);
+  await page.getByRole("button", { name: "Check answer", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Next question", exact: true })
+    .click();
+  const log = await events(page);
+  const relevant = log.filter((e) => e.questionId === q.id);
+  expect(relevant.map((e) => e.name)).toEqual([
+    "question_viewed",
+    "answer_selected",
+    "answer_checked",
+    "question_completed",
+    "question_continued",
+  ]);
+  expect(
+    relevant.every(
+      (e) =>
+        Number.isFinite(Date.parse(e.occurredAt)) &&
+        e.profileId &&
+        e.attemptId &&
+        e.bankVersion &&
+        e.questionRevision,
+    ),
+  ).toBe(true);
+  expect(
+    relevant.filter((e) => e.name === "question_completed")[0].data,
+  ).toMatchObject({ correct: false, completion: "practice-check" });
+  expect(JSON.stringify(log)).not.toContain("learner@example.com");
+  expect(log.filter((e) => e.name === "section_first_accessed")).toHaveLength(
+    1,
+  );
+  await page.getByRole("button", { name: "Save & leave" }).click();
+  await page.getByRole("button", { name: "Resume session" }).click();
+  const resumed = await events(page);
+  expect(resumed.filter((e) => e.name === "session_paused")).toHaveLength(1);
+  expect(resumed.filter((e) => e.name === "session_resumed")).toHaveLength(1);
+  const timing = await page.evaluate(
+    (key) =>
+      JSON.parse(localStorage.getItem(key)!).profiles[0].attempts[0].timing,
+    KEY,
+  );
+  expect(timing.questions[q.id].firstViewedAt).toBeTruthy();
+  expect(timing.questions[q.id].checkedAt).toBeTruthy();
+  expect(timing.questions[q.id].lastContinuedAt).toBeTruthy();
+});
+
+test("first section milestones survive retakes and question completion is recorded only once", async ({
+  page,
+}) => {
+  test.setTimeout(60_000);
+  await signIn(page);
+  await openSection(page, "05");
+  await page.getByRole("button", { name: "Start guided practice" }).click();
+  for (let i = 0; i < 40; i++) {
+    await selectAnswer(page, true);
+    await page
+      .getByRole("button", { name: "Check answer", exact: true })
+      .click();
+    await page
+      .getByRole("button", {
+        name: i < 39 ? "Next question" : "Complete practice",
+        exact: true,
+      })
+      .click();
+  }
+  const before = await page.evaluate(
+    (key) =>
+      JSON.parse(localStorage.getItem(key)!).profiles[0].sectionMilestones.S05,
+    KEY,
+  );
+  expect(before.practiceCompletedAt).toBeTruthy();
+  await page
+    .getByRole("button", { name: "Take section review", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Finish review", exact: true })
+    .click();
+  await page.getByRole("button", { name: "Submit anyway" }).click();
+  const completed = await page.evaluate(
+    (key) =>
+      JSON.parse(localStorage.getItem(key)!).profiles[0].sectionMilestones.S05,
+    KEY,
+  );
+  expect(completed.firstAccessedAt).toBe(before.firstAccessedAt);
+  expect(completed.practiceCompletedAt).toBe(before.practiceCompletedAt);
+  expect(completed.reviewStartedAt).toBeTruthy();
+  expect(completed.reviewCompletedAt).toBeTruthy();
+  await page
+    .getByRole("button", { name: "Try a fresh review", exact: true })
+    .click();
+  const after = await page.evaluate(
+    (key) =>
+      JSON.parse(localStorage.getItem(key)!).profiles[0].sectionMilestones.S05,
+    KEY,
+  );
+  for (const key of [
+    "firstAccessedAt",
+    "practiceCompletedAt",
+    "reviewStartedAt",
+    "reviewCompletedAt",
+  ])
+    expect(after[key]).toBe(completed[key]);
+  const log = await events(page);
+  expect(
+    log.filter((e) => e.name === "section_practice_completed"),
+  ).toHaveLength(1);
+  expect(
+    log.filter((e) => e.name === "section_review_first_started"),
+  ).toHaveLength(1);
+  expect(
+    log.filter((e) => e.name === "section_review_first_completed"),
+  ).toHaveLength(1);
+  expect(
+    log.filter(
+      (e) =>
+        e.name === "question_completed" &&
+        e.data.completion === "practice-check",
+    ),
+  ).toHaveLength(40);
 });

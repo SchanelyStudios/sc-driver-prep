@@ -122,7 +122,7 @@ export function completeAttempt(
   attempt: Attempt,
   now = new Date().toISOString(),
 ): Attempt {
-  if (attempt.status === "completed") return attempt;
+  if (attempt.status !== "in-progress") return attempt;
   if (
     attempt.mode === "practice" &&
     attempt.checked.length !== attempt.questions.length
@@ -209,4 +209,13 @@ export function percent(value: number) {
     new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 }).format(value) +
     "%"
   );
+}
+
+export function cancelAttempt(
+  attempt: Attempt,
+  now = new Date().toISOString(),
+): Attempt {
+  return attempt.status === "in-progress"
+    ? { ...attempt, status: "cancelled", cancelledAt: now, updatedAt: now }
+    : attempt;
 }

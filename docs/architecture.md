@@ -25,7 +25,7 @@ Class strings belong to a file-level styles/variants constant. Prefer existing v
 
 ## Content and assessments
 
-The bank contains 327 original practice items from the reviewed planning package, including 14 extracted warning-sign assets. Only the original 20 Section 5 pilot items and the Section 9 repair-aftercare item have user editorial approval; the other 306 remain prototype drafts. All sections are available for prototype development, not a claim of public-release editorial completion. Source identity and content version travel with every attempt.
+The bank contains 327 original practice items from the reviewed planning package, including 14 extracted warning-sign assets. Only the original 20 Section 5 pilot items, the Section 9 repair-aftercare item, and the revised steering-grip items have user editorial approval; the other 304 remain prototype drafts. All sections are available for prototype development, not a claim of public-release editorial completion. Source identity and content version travel with every attempt.
 
 Section reviews cover each mapped objective group and fill to the section target. This is not exhaustive atomic-fact coverage. Section 6 and the 40-question comprehensive review require an image question. The comprehensive blueprint samples all 11 instructional sections; Section 12 is reference-only. The disputed steering range, brake-failure engine-off steps, stuck-accelerator recovery sequence and school-bus resumption wording remain excluded. The approved stuck-accelerator question covers repair before driving again.
 
@@ -40,3 +40,9 @@ Attempt snapshots retain selected questions, choice order, answers, practice che
 ## Validation
 
 Native Node tests exercise assessment boundaries, coverage, randomization, response locking, pass retention, baseline retention, recommendations and saved-data validation. Playwright uses the real browser, Headless UI controls and local storage for learning flows, navigation, reloads, profiles and error handling. It uses system Chromium in the cloud environment; elsewhere run `npx playwright install chromium` once.
+
+## Dashboard flow and instrumentation
+
+The dashboard shows open sessions, milestones, and best score first. Before a completed pretest it promotes a starting-point review; afterward it recommends the last unfinished section or the next unpassed section. Individual section tiles are hidden; the sidebar remains the section navigator. New comprehensive reviews require confirmation, while resumes do not. Explicit cancellations retain a canceled attempt record but never affect scores, baseline or recommendations.
+
+Instrumentation is a typed local-only feature module with a bounded event queue and an optional transport seam. It records question interactions, submitted answers, review durations, pause/resume boundaries and first-section milestones. No URL is configured and no remote analytics are sent. See [analytics schema and integration](analytics.md) for timing semantics, privacy boundaries, retention, migration and an opt-in HTTP transport example.

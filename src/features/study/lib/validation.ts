@@ -60,7 +60,7 @@ function isAttempt(value: unknown): value is Attempt {
     !record(value) ||
     typeof value.id !== "string" ||
     !["practice", "review", "comprehensive"].includes(String(value.mode)) ||
-    !["in-progress", "completed"].includes(String(value.status))
+    !["in-progress", "completed", "cancelled"].includes(String(value.status))
   )
     return false;
   if (
@@ -111,6 +111,43 @@ function isAttempt(value: unknown): value is Attempt {
       (value.mode === "practice" && value.checked.length !== questions.length))
   )
     return false;
+  if (value.cancelledAt !== undefined && !date(value.cancelledAt)) return false;
+  if (value.status === "cancelled" && !date(value.cancelledAt)) return false;
+  if (value.updatedAt !== undefined && !date(value.updatedAt)) return false;
+  if (value.timing !== undefined) {
+    const t = value.timing;
+    if (
+      !record(t) ||
+      typeof t.activeMs !== "number" ||
+      !Number.isFinite(t.activeMs) ||
+      t.activeMs < 0 ||
+      !record(t.questions)
+    )
+      return false;
+    if (t.activeSince !== undefined && !date(t.activeSince)) return false;
+    if (t.pausedAt !== undefined && !date(t.pausedAt)) return false;
+    if (
+      t.activeSessionId !== undefined &&
+      typeof t.activeSessionId !== "string"
+    )
+      return false;
+    for (const [id, timing] of Object.entries(t.questions)) {
+      if (
+        !questions.some((q) => q.id === id) ||
+        !record(timing) ||
+        !date(timing.firstViewedAt) ||
+        !date(timing.lastViewedAt) ||
+        typeof timing.lastVisitId !== "string"
+      )
+        return false;
+      if (
+        ["lastSelectedAt", "checkedAt", "lastContinuedAt"].some(
+          (key) => timing[key] !== undefined && !date(timing[key]),
+        )
+      )
+        return false;
+    }
+  }
   return (
     date(value.startedAt) &&
     typeof value.bankVersion === "string" &&
@@ -127,6 +164,25 @@ function isView(value: unknown, attempts: Attempt[]): value is View {
         attempts.some((a) => a.id === value.attemptId)))
   );
 }
+function validMilestones(value: unknown): boolean {
+  if (value === undefined) return true;
+  if (!record(value)) return false;
+  const keys = [
+    "firstAccessedAt",
+    "lastAccessedAt",
+    "practiceCompletedAt",
+    "reviewStartedAt",
+    "reviewCompletedAt",
+  ];
+  return Object.entries(value).every(
+    ([id, item]) =>
+      /^S(0[1-9]|1[0-2])$/.test(id) &&
+      record(item) &&
+      Object.entries(item).every(
+        ([key, stamp]) => keys.includes(key) && date(stamp),
+      ),
+  );
+}
 function isProfile(value: unknown): value is Profile {
   return (
     record(value) &&
@@ -137,7 +193,10 @@ function isProfile(value: unknown): value is Profile {
     Array.isArray(value.attempts) &&
     value.attempts.every(isAttempt) &&
     new Set(value.attempts.map((a) => a.id)).size === value.attempts.length &&
-    isView(value.view, value.attempts)
+    isView(value.view, value.attempts) &&
+    (value.lastSectionId === undefined ||
+      /^S(0[1-9]|1[01])$/.test(String(value.lastSectionId))) &&
+    validMilestones(value.sectionMilestones)
   );
 }
 export function parseSavedData(raw: string): SavedData {
@@ -154,5 +213,34 @@ export function parseSavedData(raw: string): SavedData {
     )
   )
     throw new Error("Unsupported or damaged saved progress.");
-  return data as SavedData;
+  // Optional instrumentation fields do not invalidate profiles created before this release.
+  // Restore known milestone times from history, without inventing past access timestamps or events.
+  const restored = data as SavedData;
+  return {
+    ...restored,
+    profiles: restored.profiles.map((profile) => {
+      const milestones = structuredClone(profile.sectionMilestones ?? {});
+      const earliest = (prior: string | undefined, stamp: string) =>
+        !prior || stamp < prior ? stamp : prior;
+      for (const a of profile.attempts) {
+        if (!a.sectionId) continue;
+        const item = milestones[a.sectionId] ?? {};
+        if (a.mode === "review") {
+          item.reviewStartedAt = earliest(item.reviewStartedAt, a.startedAt);
+          if (a.status === "completed" && a.completedAt)
+            item.reviewCompletedAt = earliest(
+              item.reviewCompletedAt,
+              a.completedAt,
+            );
+        }
+        if (a.mode === "practice" && a.status === "completed" && a.completedAt)
+          item.practiceCompletedAt = earliest(
+            item.practiceCompletedAt,
+            a.completedAt,
+          );
+        milestones[a.sectionId] = item;
+      }
+      return { ...profile, sectionMilestones: milestones };
+    }),
+  };
 }

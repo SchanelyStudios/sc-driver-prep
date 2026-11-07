@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
+  cancelAttempt,
   answerQuestion,
   checkPracticeAnswer,
   completeAttempt,
@@ -12,7 +13,17 @@ import {
   selectQuestions,
 } from "../src/features/study/lib/engine.ts";
 import { parseSavedData } from "../src/features/study/lib/validation.ts";
-import type { Attempt, Question } from "../src/features/study/types/index.ts";
+import { nextStudySection } from "../src/features/study/lib/progression.ts";
+import {
+  activateAttempt,
+  pauseAttempt,
+} from "../src/features/study/lib/activity.ts";
+import type {
+  Attempt,
+  Question,
+  Section,
+  Profile,
+} from "../src/features/study/types/index.ts";
 const bank = JSON.parse(
   readFileSync(
     new URL("../src/features/study/data/questions.json", import.meta.url),
@@ -293,4 +304,69 @@ test("syntactically valid but corrupt attempt scopes are rejected before renderi
   assert.throws(() => parseSavedData(JSON.stringify(data)));
   data.profiles[0].attempts[0].sectionId = "S01";
   assert.throws(() => parseSavedData(JSON.stringify(data)));
+});
+
+test("cancelled reviews cannot be completed and never enter baseline, scores, or recommendations", () => {
+  const question = pool[0];
+  const a = cancelAttempt({
+    ...fixture([question], "comprehensive"),
+    sectionId: null,
+  });
+  assert.equal(a.status, "cancelled");
+  assert.equal(completeAttempt(a).status, "cancelled");
+  assert.equal(comprehensiveHistory([a]).baseline, undefined);
+  assert.equal(recommendations([a]).length, 0);
+  assert.equal(sectionStatus([a], "S05"), "Not started");
+});
+
+test("next section guidance appears only after pretest, resumes a section, and advances after a pass", () => {
+  const allSections: Section[] = catalog.sections;
+  const profile: Profile = {
+    id: "p",
+    email: "test@example.com",
+    createdAt: "2026-01-01T00:00:00Z",
+    view: { screen: "dashboard" },
+    attempts: [],
+  };
+  assert.equal(nextStudySection(profile, allSections), null);
+  const pretest = completeAttempt({
+    ...fixture([pool[0]], "comprehensive"),
+    sectionId: null,
+  });
+  profile.attempts.push(pretest);
+  assert.equal(nextStudySection(profile, allSections)?.id, "S01");
+  profile.lastSectionId = "S04";
+  assert.equal(nextStudySection(profile, allSections)?.id, "S04");
+  const q = pool.find((q) => q.sectionId === "S04")!;
+  profile.attempts.push(
+    completeAttempt({
+      ...answerQuestion(fixture([q]), q.id, q.correctChoiceId),
+      sectionId: "S04",
+    }),
+  );
+  assert.equal(nextStudySection(profile, allSections)?.id, "S05");
+  const practice = completeAttempt({
+    ...fixture([pool[0]], "practice"),
+    sectionId: "S01",
+    checked: [pool[0].id],
+    answers: { [pool[0].id]: pool[0].correctChoiceId },
+  });
+  profile.lastSectionId = "S01";
+  profile.attempts.push(practice);
+  assert.equal(nextStudySection(profile, allSections)?.id, "S01"); // Practice alone is not a section pass.
+});
+
+test("active review time excludes pauses and does not charge a stale interval across page sessions", () => {
+  const a = fixture([pool[0]]);
+  const t = (ms: number) =>
+    new Date(Date.parse(a.startedAt) + ms).toISOString();
+  let active = activateAttempt(a, t(0), "session-a");
+  active = pauseAttempt(active, t(1000), "session-a");
+  active = activateAttempt(active, t(5000), "session-a");
+  active = pauseAttempt(active, t(6500), "session-a");
+  assert.equal(active.timing?.activeMs, 2500);
+  active = activateAttempt(active, t(7000), "session-a");
+  active = activateAttempt(active, t(90000), "session-b");
+  active = pauseAttempt(active, t(91000), "session-b");
+  assert.equal(active.timing?.activeMs, 3500);
 });

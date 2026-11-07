@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { Box } from "@/components/ui/box";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Dialog } from "@/components/ui/dialog";
-import { Icon } from "@/components/ui/icon";
 import { Sidebar } from "./sidebar";
 import { Dashboard } from "./dashboard";
 import { Welcome } from "./welcome";
@@ -20,8 +18,6 @@ const styles = {
   shell: "min-h-dvh lg:flex",
   mainColumn: "min-w-0 flex-1",
   main: "mx-auto min-h-[80vh] w-full max-w-6xl px-5 pb-12 pt-7 sm:px-9 sm:pt-10 xl:px-12",
-  topLine: "mb-9 flex items-center justify-between gap-4",
-  topLabel: "hidden sm:block",
   footer:
     "mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-line px-5 py-6 sm:px-9 xl:px-12",
   loading: "flex min-h-dvh items-center justify-center text-muted",
@@ -38,6 +34,7 @@ export function StudyApp() {
   } = useStudy();
   const [error, setError] = useState<string | null>(null);
   const [reset, setReset] = useState(false);
+  const [startReviewOpen, setStartReviewOpen] = useState(false);
   const view = profile?.view;
   const attempt =
     view?.screen === "attempt"
@@ -47,7 +44,11 @@ export function StudyApp() {
   useEffect(() => {
     document.querySelector<HTMLElement>("[data-page-heading]")?.focus();
   }, [focusKey]);
-  function start(mode: Mode, sectionId: string | null) {
+  const sectionId = view?.screen === "section" ? view.sectionId : null;
+  useEffect(() => {
+    if (profile?.id && sectionId) studyActions.visitSection(sectionId);
+  }, [profile?.id, sectionId]);
+  function begin(mode: Mode, sectionId: string | null) {
     if (!profile) return;
     setError(null);
     const pending = profile.attempts.find(
@@ -67,6 +68,20 @@ export function StudyApp() {
         "This session could not be prepared. Your progress is safe; please try another section.",
       );
     }
+  }
+  function start(mode: Mode, sectionId: string | null) {
+    const pending = profile?.attempts.find(
+      (a) =>
+        a.mode === mode &&
+        a.sectionId === sectionId &&
+        a.status === "in-progress",
+    );
+    if (pending) {
+      studyActions.navigate({ screen: "attempt", attemptId: pending.id });
+      return;
+    }
+    if (mode === "comprehensive") setStartReviewOpen(true);
+    else begin(mode, sectionId);
   }
   if (!ready)
     return (
@@ -149,16 +164,7 @@ export function StudyApp() {
         <Sidebar profile={profile} />
         <div className={styles.mainColumn}>
           <main className={styles.main} id="main-content">
-            <div className={styles.topLine}>
-              <Text variant="small" tone="muted" className={styles.topLabel}>
-                A little progress, every time.
-              </Text>
-              <Badge tone="brand">
-                <Icon name="check" size="sm" />
-                Your pace. Your path.
-              </Badge>
-            </div>
-            {attempt ? (
+            {attempt && attempt.status !== "cancelled" ? (
               attempt.status === "completed" ? (
                 <Results
                   key={attempt.id}
@@ -186,9 +192,6 @@ export function StudyApp() {
               manual practice
             </Text>
             <Box direction="row" gap="sm" wrap>
-              <Button variant="quiet" size="sm" onClick={studyActions.signOut}>
-                Switch profile
-              </Button>
               <Button variant="quiet" size="sm" onClick={() => setReset(true)}>
                 Clear progress
               </Button>
@@ -196,6 +199,35 @@ export function StudyApp() {
           </footer>
         </div>
       </div>
+      <Dialog
+        open={startReviewOpen}
+        onClose={() => setStartReviewOpen(false)}
+        title="Start a new comprehensive review?"
+      >
+        <Box className={styles.modalBody}>
+          <Text variant="small" tone="muted">
+            You’ll get 40 questions from across the manual. There’s no time
+            limit, and you can leave and resume whenever you need. Your previous
+            completed scores will stay saved.
+          </Text>
+          <Box direction="row" wrap justify="end">
+            <Button
+              variant="secondary"
+              onClick={() => setStartReviewOpen(false)}
+            >
+              Not now
+            </Button>
+            <Button
+              onClick={() => {
+                setStartReviewOpen(false);
+                begin("comprehensive", null);
+              }}
+            >
+              Start comprehensive review
+            </Button>
+          </Box>
+        </Box>
+      </Dialog>
       {confirm}
     </>
   );

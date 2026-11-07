@@ -97,6 +97,7 @@ function Navigation({
           return (
             <Button
               key={section.id}
+              aria-label={`${String(section.number).padStart(2, "0")} ${section.title} ${status}`}
               variant="quiet"
               size="none"
               className={classes(
@@ -146,7 +147,7 @@ function Navigation({
           <Text variant="caption">{completed} / 11</Text>
         </Box>
         <Progress value={completed} max={11} label="Sections passed" />
-        <Box direction="row" align="center" justify="between">
+        <Box gap="sm" align="start">
           <Box gap="none">
             <Text
               variant="caption"
@@ -161,11 +162,12 @@ function Navigation({
           </Box>
           <Button
             variant="quiet"
-            size="icon"
+            size="sm"
             aria-label="Switch profile"
             onClick={studyActions.signOut}
           >
-            <Icon name="user" />
+            <Icon name="user" size="sm" />
+            Switch profile
           </Button>
         </Box>
       </Box>
