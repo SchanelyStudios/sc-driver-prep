@@ -9,8 +9,8 @@ export type EventData = {
   };
   question_completed: {
     answerId: string | null;
-    correct: boolean;
-    completion: "practice-check" | "review-submit";
+    correct: boolean | null;
+    completion: "practice-check" | "practice-teach" | "review-submit";
   };
   question_continued: {
     nextQuestionId: string | null;

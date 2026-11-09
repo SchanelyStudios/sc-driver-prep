@@ -10,6 +10,7 @@ import type {
 import {
   answerQuestion,
   checkPracticeAnswer,
+  teachPracticeQuestion,
   completeAttempt,
   cancelAttempt,
   score,
@@ -412,31 +413,35 @@ export const studyActions = {
       return withAttempt(p, { ...next, updatedAt: now });
     });
   },
-  check(id: string) {
+  teach(id: string) {
+    studyActions.check(id, true);
+  },
+  check(id: string, teach = false) {
     mutateAttempt(id, (profile, a, now) => {
       let p = profile;
-      const next = checkPracticeAnswer(a);
+      const next = teach ? teachPracticeQuestion(a) : checkPracticeAnswer(a);
       if (next === a) return p;
       const q = a.questions[a.cursor];
       const answerId = a.answers[q.id];
       const prior = a.timing?.questions[q.id];
-      studyAnalytics.record(
-        "answer_checked",
-        context(p, a, q),
-        {
-          answerId,
-          correct: answerId === q.correctChoiceId,
-          sinceSelectionMs: millisecondsBetween(prior?.lastSelectedAt, now),
-        },
-        now,
-      );
+      if (!teach)
+        studyAnalytics.record(
+          "answer_checked",
+          context(p, a, q),
+          {
+            answerId,
+            correct: answerId === q.correctChoiceId,
+            sinceSelectionMs: millisecondsBetween(prior?.lastSelectedAt, now),
+          },
+          now,
+        );
       studyAnalytics.record(
         "question_completed",
         context(p, a, q),
         {
-          answerId,
-          correct: answerId === q.correctChoiceId,
-          completion: "practice-check",
+          answerId: teach ? null : answerId,
+          correct: teach ? null : answerId === q.correctChoiceId,
+          completion: teach ? "practice-teach" : "practice-check",
         },
         now,
       );

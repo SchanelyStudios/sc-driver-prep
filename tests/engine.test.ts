@@ -5,6 +5,7 @@ import {
   cancelAttempt,
   answerQuestion,
   checkPracticeAnswer,
+  teachPracticeQuestion,
   completeAttempt,
   comprehensiveHistory,
   recommendations,
@@ -369,4 +370,23 @@ test("active review time excludes pauses and does not charge a stale interval ac
   active = activateAttempt(active, t(90000), "session-b");
   active = pauseAttempt(active, t(91000), "session-b");
   assert.equal(active.timing?.activeMs, 3500);
+});
+
+test("teaching resolves practice neutrally, clears a tentative answer, and locks it", () => {
+  const q = pool.find((q) => q.sectionId === "S05")!;
+  const a = fixture([q], "practice");
+  const selected = answerQuestion(a, q.id, q.correctChoiceId);
+  const taught = teachPracticeQuestion(selected);
+  assert.deepEqual(taught.taught, [q.id]);
+  assert.deepEqual(taught.checked, [q.id]);
+  assert.equal(taught.answers[q.id], undefined);
+  assert.equal(score(taught).total, 0);
+  assert.equal(score(taught).correct, 0);
+  assert.equal(answerQuestion(taught, q.id, q.correctChoiceId), taught);
+  assert.equal(teachPracticeQuestion(taught), taught);
+  assert.equal(completeAttempt(taught).status, "completed");
+  for (const mode of ["review", "comprehensive"] as const) {
+    const review = fixture([q], mode);
+    assert.equal(teachPracticeQuestion(review), review);
+  }
 });

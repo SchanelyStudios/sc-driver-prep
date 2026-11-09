@@ -8,6 +8,7 @@ import type { Question } from "../types";
 const styles = {
   base: "rounded-xl border p-5",
   success: "border-success/20 bg-success-soft",
+  taught: "border-info/25 bg-info-soft",
   incorrect: "border-accent/30 bg-accent-soft",
   title: "flex items-center gap-2",
   body: "text-sm leading-6",
@@ -17,10 +18,12 @@ export function AnswerFeedback({
   question,
   answer,
   live = false,
+  taught = false,
 }: {
   question: Question;
   answer?: string;
   live?: boolean;
+  taught?: boolean;
 }) {
   const correct = answer === question.correctChoiceId;
   const expected = question.choices.find(
@@ -31,21 +34,23 @@ export function AnswerFeedback({
       gap="sm"
       className={classes(
         styles.base,
-        correct ? styles.success : styles.incorrect,
+        taught ? styles.taught : correct ? styles.success : styles.incorrect,
       )}
       role={live ? "status" : undefined}
     >
       <Text
         variant="subheading"
-        tone={correct ? "success" : "accent"}
+        tone={taught ? "info" : correct ? "success" : "accent"}
         className={styles.title}
       >
         <Icon name={correct ? "check" : "book"} size="sm" />
-        {correct
-          ? "You’ve got it."
-          : answer
-            ? "Not quite. Let’s make it stick."
-            : "You left this one unanswered."}
+        {taught
+          ? "Let’s learn this together."
+          : correct
+            ? "You’ve got it."
+            : answer
+              ? "Not quite. Let’s make it stick."
+              : "You left this one unanswered."}
       </Text>
       {!correct && (
         <Text variant="small">

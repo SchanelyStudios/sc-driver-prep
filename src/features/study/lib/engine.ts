@@ -79,9 +79,14 @@ export function selectQuestions(
   }));
 }
 
-export function score(attempt: Pick<Attempt, "questions" | "answers">) {
-  const total = attempt.questions.length;
-  const correct = attempt.questions.filter(
+export function score(
+  attempt: Pick<Attempt, "questions" | "answers" | "taught">,
+) {
+  const scored = attempt.questions.filter(
+    (q) => !attempt.taught?.includes(q.id),
+  );
+  const total = scored.length;
+  const correct = scored.filter(
     (q) => attempt.answers[q.id] === q.correctChoiceId,
   ).length;
   return {
@@ -118,6 +123,25 @@ export function checkPracticeAnswer(attempt: Attempt): Attempt {
     return attempt;
   return { ...attempt, checked: [...attempt.checked, question.id] };
 }
+/** Teaching resolves practice without submitting or grading an answer. */
+export function teachPracticeQuestion(attempt: Attempt): Attempt {
+  const question = attempt.questions[attempt.cursor];
+  if (
+    attempt.mode !== "practice" ||
+    attempt.status !== "in-progress" ||
+    attempt.checked.includes(question.id)
+  )
+    return attempt;
+  const answers = { ...attempt.answers };
+  delete answers[question.id];
+  return {
+    ...attempt,
+    answers,
+    checked: [...attempt.checked, question.id],
+    taught: [...(attempt.taught ?? []), question.id],
+  };
+}
+
 export function completeAttempt(
   attempt: Attempt,
   now = new Date().toISOString(),

@@ -79,7 +79,7 @@ export function QuizSession({ attempt }: { attempt: Attempt }) {
           </Badge>
           <Text variant="caption" tone="muted">
             {done} of {attempt.questions.length}{" "}
-            {practice ? "checked" : "answered"}
+            {practice ? "explored" : "answered"}
           </Text>
         </Box>
         <Text as="h1" variant="heading" data-page-heading tabIndex={-1}>
@@ -90,13 +90,13 @@ export function QuizSession({ attempt }: { attempt: Attempt }) {
           max={attempt.questions.length}
           label={
             practice
-              ? "Practice questions checked"
+              ? "Practice questions explored"
               : "Review questions answered"
           }
         />
         <Text variant="small" tone="muted" className={styles.hint}>
           {practice
-            ? "Choose an answer, then check it. Each explanation is a chance to learn."
+            ? "Choose an answer and check it, or choose “Not sure; teach me!” to learn without guessing."
             : "You can change answers before submitting. Explanations appear after the review. Score 85% or higher to pass."}
         </Text>
       </Box>
@@ -124,6 +124,7 @@ export function QuizSession({ attempt }: { attempt: Attempt }) {
               question={question}
               answer={attempt.answers[question.id]}
               live
+              taught={attempt.taught?.includes(question.id)}
             />
           )}
         </Box>
@@ -134,16 +135,32 @@ export function QuizSession({ attempt }: { attempt: Attempt }) {
           align="center"
           className={styles.footer}
         >
-          <Button
-            variant="quiet"
-            disabled={attempt.cursor === 0}
-            onClick={() =>
-              studyActions.cursor(attempt.id, attempt.cursor - 1, "previous")
-            }
-          >
-            <Icon name="back" size="sm" />
-            Previous
-          </Button>
+          <Box direction="row" wrap align="center">
+            {practice && !checked && (
+              <Button
+                variant="secondary"
+                onClick={() => studyActions.teach(attempt.id)}
+              >
+                Not sure; teach me!
+              </Button>
+            )}
+            {attempt.cursor > 0 && (
+              <Button
+                variant="quiet"
+                disabled={attempt.cursor === 0}
+                onClick={() =>
+                  studyActions.cursor(
+                    attempt.id,
+                    attempt.cursor - 1,
+                    "previous",
+                  )
+                }
+              >
+                <Icon name="back" size="sm" />
+                Previous
+              </Button>
+            )}
+          </Box>
           {practice && !checked ? (
             <Button
               disabled={!attempt.answers[question.id]}

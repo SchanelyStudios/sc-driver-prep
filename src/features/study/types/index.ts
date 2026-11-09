@@ -58,6 +58,7 @@ export type Attempt = {
   questions: Question[];
   answers: Record<string, string>;
   checked: string[];
+  taught?: string[];
   cursor: number;
   status: "in-progress" | "completed" | "cancelled";
   startedAt: string;

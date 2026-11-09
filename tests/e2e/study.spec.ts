@@ -523,3 +523,57 @@ test("first section milestones survive retakes and question completion is record
     ),
   ).toHaveLength(40);
 });
+
+test("teach me reveals neutral feedback, persists, and is absent in reviews", async ({
+  page,
+}) => {
+  await signIn(page);
+  await openSection(page, "05");
+  await page.getByRole("button", { name: "Start guided practice" }).click();
+  const q = await selectAnswer(page, false);
+  await page.getByRole("button", { name: "Not sure; teach me!" }).click();
+  await expect(page.getByText("Let’s learn this together.")).toBeVisible();
+  await expect(page.getByText(q.explanation, { exact: true })).toBeVisible();
+  await expect(page.getByRole("status")).toHaveClass(/bg-info-soft/);
+  await expect(page.getByRole("radio").first()).toBeDisabled();
+  await page.reload();
+  await expect(page.getByText("Let’s learn this together.")).toBeVisible();
+  const saved = await page.evaluate(() => {
+    const s = JSON.parse(localStorage.getItem("sc-driver-prep:v1")!);
+    const a = s.profiles[0].attempts[0];
+    const events = JSON.parse(
+      localStorage.getItem("sc-driver-prep:events:v1")!,
+    ).events;
+    return {
+      taught: a.taught,
+      answers: a.answers,
+      completed: events.filter(
+        (e: { name: string }) => e.name === "question_completed",
+      ),
+    };
+  });
+  expect(saved.taught).toContain(q.id);
+  expect(saved.answers[q.id]).toBeUndefined();
+  expect(saved.completed).toHaveLength(1);
+  expect(saved.completed[0].data).toEqual({
+    answerId: null,
+    correct: null,
+    completion: "practice-teach",
+  });
+  await page.getByRole("button", { name: "Next question" }).click();
+  await expect(
+    page.getByRole("button", { name: "Not sure; teach me!" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Save & leave" }).click();
+  await openSection(page, "05");
+  await page.getByRole("button", { name: "Start section review" }).click();
+  await expect(
+    page.getByRole("button", { name: "Not sure; teach me!" }),
+  ).toHaveCount(0);
+  await page.getByRole("button", { name: "Save & leave" }).click();
+  await page.getByRole("button", { name: "Take pretest", exact: true }).click();
+  await confirmComprehensive(page);
+  await expect(
+    page.getByRole("button", { name: "Not sure; teach me!" }),
+  ).toHaveCount(0);
+});

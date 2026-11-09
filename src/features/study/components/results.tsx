@@ -22,6 +22,7 @@ const styles = {
   answerStatus: "shrink-0 pt-1",
   correct: "text-success",
   incorrect: "text-accent-ink",
+  taught: "text-info",
   heading: "max-w-xl",
   comparison: "border-t border-line pt-4",
   caption: "text-muted",
@@ -69,10 +70,16 @@ export function Results({
         </Text>
         <Text tone="muted">{section?.title ?? "Comprehensive review"}</Text>
         <Text variant="metric">
-          {result.correct} / {result.total}
+          {practice && result.total === 0
+            ? "Explored every question"
+            : `${result.correct} / ${result.total}`}
         </Text>
         <Text variant="small" tone="muted">
-          {percent(result.percentage)} correct on your first answers.{" "}
+          {result.total > 0 &&
+            `${percent(result.percentage)} correct on your first answers. `}
+          {practice &&
+            !!attempt.taught?.length &&
+            `${attempt.taught.length} learned with help, without a right or wrong mark. `}
           {practice
             ? "Practice builds understanding; a section review earns your pass."
             : `${result.needed} correct needed to pass this ${result.total}-question review.`}
@@ -151,12 +158,21 @@ export function Results({
         {attempt.questions.map((question, index) => {
           const answer = attempt.answers[question.id];
           const correct = answer === question.correctChoiceId;
+          const taught = !!attempt.taught?.includes(question.id);
           return (
             <Disclosure
               key={question.id}
               title={
                 <span className={styles.answerTitle}>
-                  <span className={correct ? styles.correct : styles.incorrect}>
+                  <span
+                    className={
+                      taught
+                        ? styles.taught
+                        : correct
+                          ? styles.correct
+                          : styles.incorrect
+                    }
+                  >
                     <Icon name={correct ? "check" : "book"} size="sm" />
                   </span>
                   <span>
@@ -168,11 +184,16 @@ export function Results({
               <Box gap="sm">
                 <QuestionImage question={question} />
                 <Text variant="small" tone="muted">
-                  Your answer:{" "}
-                  {question.choices.find((c) => c.id === answer)?.text ??
-                    "Unanswered"}
+                  {taught ? "Learned with help" : "Your answer:"}{" "}
+                  {!taught &&
+                    (question.choices.find((c) => c.id === answer)?.text ??
+                      "Unanswered")}
                 </Text>
-                <AnswerFeedback question={question} answer={answer} />
+                <AnswerFeedback
+                  question={question}
+                  answer={answer}
+                  taught={taught}
+                />
               </Box>
             </Disclosure>
           );

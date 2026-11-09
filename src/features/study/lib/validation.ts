@@ -98,10 +98,23 @@ function isAttempt(value: unknown): value is Attempt {
   )
     return false;
   if (
+    value.taught !== undefined &&
+    (!stringArray(value.taught) ||
+      value.mode !== "practice" ||
+      new Set(value.taught).size !== value.taught.length ||
+      !value.taught.every(
+        (id) =>
+          (value.checked as string[]).includes(id) &&
+          !Object.hasOwn(value.answers as object, id),
+      ))
+  )
+    return false;
+  const taught = (value.taught ?? []) as string[];
+  if (
     !value.checked.every(
       (id) =>
         questions.some((q) => q.id === id) &&
-        Object.hasOwn(value.answers as object, id),
+        (Object.hasOwn(value.answers as object, id) || taught.includes(id)),
     )
   )
     return false;

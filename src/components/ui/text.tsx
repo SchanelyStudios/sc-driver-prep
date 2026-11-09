@@ -19,6 +19,7 @@ const tones = {
   inverse: "text-surface",
   brand: "text-brand",
   success: "text-success",
+  info: "text-info",
   danger: "text-danger",
   accent: "text-accent-ink",
 };
